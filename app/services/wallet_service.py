@@ -37,15 +37,27 @@ class WalletService:
             )
             
             if not customer_response.get("status"):
-                # Check if customer already exists in Payscribe
-                error_desc = customer_response.get("description", "").lower()
+                # Extract error message from various possible response shapes
+                error_desc = (
+                    customer_response.get("description")
+                    or (customer_response.get("message") if isinstance(customer_response.get("message"), str) else None)
+                    or (customer_response.get("message", {}).get("description") if isinstance(customer_response.get("message"), dict) else None)
+                    or customer_response.get("error")
+                    or "Unknown error"
+                )
+                error_desc = str(error_desc).lower()
+                current_app.logger.warning("Payscribe create_customer failed: %s", customer_response)
                 if "already exist" in error_desc:
-                    # Customer exists in Payscribe - this shouldn't happen if email/phone validation worked
-                    # But if it does, we can't create a new account for them
                     raise ValidationException("Customer already exists in Payscribe. Please use a different email or phone.")
-                raise ValidationException("Failed to create Payscribe customer")
+                raise ValidationException(f"Failed to create Payscribe customer: {error_desc}")
             
-            customer_id = customer_response["message"]["details"]["customer_id"]
+            # Navigate response: may be message.details.customer_id or message.customer_id
+            msg = customer_response.get("message") or {}
+            details = msg.get("details") if isinstance(msg.get("details"), dict) else msg
+            customer_id = details.get("customer_id") or msg.get("customer_id")
+            if not customer_id:
+                current_app.logger.error("Payscribe create_customer: no customer_id in response: %s", customer_response)
+                raise ValidationException("Invalid response from Payscribe: no customer ID")
             wallet.payscribe_customer_id = customer_id
             
             # Create virtual account

@@ -27,7 +27,7 @@ class PayscribeClient:
     def api_token(self):
         """Get API token from config."""
         if self._api_token is None:
-            self._api_token = current_app.config.get("PAYSCRIBE_API_TOKEN", "ps_pk_test_5fJUELCWRxbYyqE0mylVlfeekNK9iY0990")
+            self._api_token = current_app.config.get("PAYSCRIBE_API_TOKEN", "ps_pk_live_s34awkOxtpU7XteKeY1poLaP3K1jDrAQzey")
         return self._api_token
     
     @property

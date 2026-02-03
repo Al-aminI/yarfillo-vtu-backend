@@ -15,6 +15,11 @@ class Config:
     SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "postgresql://neondb_owner:npg_hBaQs0xbRI6v@ep-weathered-sun-ais2jvil-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = os.getenv("SQLALCHEMY_ECHO", "False").lower() == "true"
+    # Avoid "SSL connection has been closed unexpectedly" after idle: test connections before use, recycle before server closes them
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        "pool_pre_ping": True,   # run a quick check before using a pooled connection; if dead, open a new one
+        "pool_recycle": 300,     # recycle connections after 5 min (Neon closes idle connections after a few minutes)
+    }
 
     # Payscribe
     PAYSCRIBE_BASE_URL = os.getenv("PAYSCRIBE_BASE_URL", "https://api.payscribe.ng/api/v1")

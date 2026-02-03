@@ -17,15 +17,8 @@ def create_app(config_class=Config):
     migrate.init_app(app, db)
     limiter.init_app(app)
 
-    # CORS configuration
-    allowed_origins = app.config.get("ALLOWED_ORIGINS", "").split(",")
-    CORS(app, resources={
-        r"/api/*": {
-            "origins": allowed_origins,
-            "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-            "allow_headers": ["Content-Type", "Authorization"]
-        }
-    })
+    # CORS: allow all origins
+    CORS(app, resources={r"/api/*": {"origins": "*"}})
     
     # Register API blueprint (includes Swagger documentation)
     app.register_blueprint(api_bp, url_prefix='/api/v1')

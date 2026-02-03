@@ -1,8 +1,7 @@
 """Application entry point."""
+import os
 from app import create_app
 from app.config import config
-from app.tasks.celery_app import celery_app
-import os
 
 # Get environment
 env = os.getenv("FLASK_ENV", "development")

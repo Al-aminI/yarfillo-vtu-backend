@@ -1,8 +1,7 @@
 """Webhook endpoints."""
 from flask_restx import Namespace, Resource
 from flask import request, current_app
-from app.tasks.webhook_tasks import process_payscribe_webhook
-from app.utils.response import success_response, error_response
+from app.services.webhook_service import process_payscribe_webhook
 from app.utils.security import verify_webhook_ip
 from app.models.webhook_log import WebhookLog
 from app.extensions import db
@@ -43,11 +42,10 @@ class PayscribeWebhook(Resource):
             webhook_log = WebhookLog(event_type=event_type, payload=payload)
             db.session.add(webhook_log)
             db.session.commit()
-            
-            # Process webhook asynchronously
-            process_payscribe_webhook.delay(webhook_log.id)
-            
-            # Return 200 immediately to acknowledge receipt
+
+            # Process webhook synchronously
+            process_payscribe_webhook(webhook_log)
+
             return {"status": True, "message": "Webhook processed", "data": {"message": "Webhook received"}}, 200
         except Exception as e:
             current_app.logger.error(f"Webhook error: {str(e)}")

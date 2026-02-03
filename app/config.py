@@ -12,15 +12,10 @@ class Config:
     DEBUG = os.getenv("DEBUG", "False").lower() == "true"
     
     # Database
-    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "postgresql://postgres:h2nc6h4co2h@localhost:5432/yarfillo_vtu_db")
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "postgresql://neondb_owner:npg_hBaQs0xbRI6v@ep-weathered-sun-ais2jvil-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = os.getenv("SQLALCHEMY_ECHO", "False").lower() == "true"
-    
-    # Redis
-    REDIS_URL = os.getenv("REDIS_URL", "redis://redis-12972.c85.us-east-1-2.ec2.cloud.redislabs.com:12972/0")
-    CELERY_BROKER_URL = os.getenv("REDIS_URL", "redis://redis-12972.c85.us-east-1-2.ec2.cloud.redislabs.com:12972/0")
-    CELERY_RESULT_BACKEND = os.getenv("REDIS_URL", "redis://redis-12972.c85.us-east-1-2.ec2.cloud.redislabs.com:12972/0")
-    
+
     # Payscribe
     PAYSCRIBE_BASE_URL = os.getenv("PAYSCRIBE_BASE_URL", "https://sandbox.payscribe.ng/api/v1")
     PAYSCRIBE_API_TOKEN = os.getenv("PAYSCRIBE_API_TOKEN", "ps_pk_test_5fJUELCWRxbYyqE0mylVlfeekNK9iY0990")
@@ -34,10 +29,9 @@ class Config:
     # CORS
     ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:8080,http://localhost:5173")
     
-    # Rate Limiting
-    RATELIMIT_STORAGE_URL = os.getenv("REDIS_URL", "redis://redis-12972.c85.us-east-1-2.ec2.cloud.redislabs.com:12972/0")
+    # Rate Limiting (in-memory when no storage URL)
     RATELIMIT_DEFAULT = "200 per day, 50 per hour"
-    
+
     # Server
     HOST = os.getenv("HOST", "0.0.0.0")
     PORT = int(os.getenv("PORT", "5003"))

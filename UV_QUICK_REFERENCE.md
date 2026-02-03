@@ -101,9 +101,6 @@ uv run mypy app/
 # Run Flask commands
 uv run flask db upgrade
 uv run flask db migrate -m "Description"
-
-# Run Celery
-uv run celery -A app.tasks.celery_app worker --loglevel=info
 ```
 
 ## Benefits of UV

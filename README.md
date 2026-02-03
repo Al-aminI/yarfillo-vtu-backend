@@ -18,7 +18,6 @@ Backend API for the Yarfillo VTU Platform built with Flask, PostgreSQL, and Pays
 - **PostgreSQL**: Database
 - **SQLAlchemy**: ORM
 - **Alembic**: Database migrations
-- **Celery + Redis**: Task queue for async processing
 - **JWT**: Authentication
 - **Payscribe API**: VTU services integration
 - **UV**: Fast Python package manager
@@ -29,7 +28,6 @@ Backend API for the Yarfillo VTU Platform built with Flask, PostgreSQL, and Pays
 
 - Python 3.12+
 - PostgreSQL 12+
-- Redis 6+
 - Payscribe API credentials
 
 ### Installation
@@ -90,30 +88,6 @@ Backend API for the Yarfillo VTU Platform built with Flask, PostgreSQL, and Pays
    # Then run the application
    python run.py
    ```
-
-### Running Celery Worker
-
-In a separate terminal, run the Celery worker:
-
-```bash
-# Activate virtual environment
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-
-# Run Celery worker
-celery -A app.tasks.celery_app worker --loglevel=info
-```
-
-### Running Celery Beat (for periodic tasks)
-
-In a separate terminal, run Celery beat:
-
-```bash
-# Activate virtual environment
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-
-# Run Celery beat
-celery -A app.tasks.celery_app beat --loglevel=info
-```
 
 ## API Documentation
 
@@ -179,7 +153,6 @@ To test protected endpoints in Swagger UI:
 See `.env.example` for all required environment variables:
 
 - `DATABASE_URL`: PostgreSQL connection string
-- `REDIS_URL`: Redis connection string
 - `PAYSCRIBE_BASE_URL`: Payscribe API base URL
 - `PAYSCRIBE_API_TOKEN`: Payscribe API token
 - `PAYSCRIBE_SECRET_KEY`: Payscribe secret key for webhook verification
@@ -195,7 +168,6 @@ yarfillo-vtu-backend/
 │   ├── models/       # Database models
 │   ├── services/     # Business logic
 │   ├── integrations/  # External API clients
-│   ├── tasks/        # Celery tasks
 │   ├── utils/        # Utilities
 │   └── errors/       # Error handling
 ├── migrations/       # Database migrations

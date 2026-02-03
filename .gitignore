@@ -64,10 +64,6 @@ migrations/versions/*.py
 .DS_Store
 Thumbs.db
 
-# Celery
-celerybeat-schedule
-celerybeat.pid
-
 # Flask
 instance/
 .webassets-cache

@@ -20,14 +20,14 @@ class PayscribeClient:
     def base_url(self):
         """Get base URL from config."""
         if self._base_url is None:
-            self._base_url = current_app.config.get("PAYSCRIBE_BASE_URL", "https://sandbox.payscribe.ng/api/v1")
+            self._base_url = current_app.config.get("PAYSCRIBE_BASE_URL", "https://api.payscribe.ng/api/v1")
         return self._base_url
     
     @property
     def api_token(self):
         """Get API token from config."""
         if self._api_token is None:
-            self._api_token = current_app.config.get("PAYSCRIBE_API_TOKEN", "")
+            self._api_token = current_app.config.get("PAYSCRIBE_API_TOKEN", "ps_pk_test_5fJUELCWRxbYyqE0mylVlfeekNK9iY0990")
         return self._api_token
     
     @property

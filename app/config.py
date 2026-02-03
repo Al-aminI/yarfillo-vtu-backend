@@ -17,7 +17,7 @@ class Config:
     SQLALCHEMY_ECHO = os.getenv("SQLALCHEMY_ECHO", "False").lower() == "true"
 
     # Payscribe
-    PAYSCRIBE_BASE_URL = os.getenv("PAYSCRIBE_BASE_URL", "https://sandbox.payscribe.ng/api/v1")
+    PAYSCRIBE_BASE_URL = os.getenv("PAYSCRIBE_BASE_URL", "https://api.payscribe.ng/api/v1")
     PAYSCRIBE_API_TOKEN = os.getenv("PAYSCRIBE_API_TOKEN", "ps_pk_test_5fJUELCWRxbYyqE0mylVlfeekNK9iY0990")
     PAYSCRIBE_SECRET_KEY = os.getenv("PAYSCRIBE_SECRET_KEY", "")
     PAYSCRIBE_WEBHOOK_IPS = os.getenv("PAYSCRIBE_WEBHOOK_IP", "162.254.34.78").split(",")
